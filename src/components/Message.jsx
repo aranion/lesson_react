@@ -1,4 +1,16 @@
 import React from "react";
+import { PropTypes } from 'prop-types';
+
+Message.propTypes = {
+  id: PropTypes.number,
+  author: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired
+}
+Message.defaultProps = {
+  id: '42x',
+  author: 'author',
+  text: ''
+};
 
 function Message(props) {
   console.log('Start function Message');
@@ -32,10 +44,14 @@ function Message(props) {
 
   // <React.Fragment> === <></>
   return <React.Fragment>
-    <div className='wrapper-row'>
+    {/* <div className='wrapper-row'>
       <div>{props.message.id}</div>
       <div>{props.message.text}</div>
       <div>{props.message.author}</div>
+    </div> */}
+
+    <div className={'wrapper-row-' + props.message.author.toLowerCase()}>
+      {props.message.author} : {props.message.text}
     </div>
     {/*<p>Counter = {count}</p>
     <button onClick={handleClick}>+1</button>

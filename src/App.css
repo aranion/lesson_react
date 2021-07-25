@@ -30,44 +30,67 @@ h2 {
 form {
   display: flex;
   margin: 10px 0;
+  justify-content: center;
 }
 .wrapper-content {
   width: 100%;
   padding: 0 100px;
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+.content-flex {
+  display: flex;
+  width: 100%;
+}
+.content-flex > div {
+  width: 60%;
+  min-height: 400px;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.content-flex > div:first-child {
+  width: 40%;
+  border-right: 1px solid black;
+}
+input:focus, button:focus {
+  outline: none !important;
 }
 .form-input, .form-btn {
   height: 40px;
-  padding: 10px;
+  padding: 10px 20px;
   box-sizing: border-box;
-  margin-right: 30px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius:  10px;
+  border: 1px solid #61dafb;
 }
 .form-input-text {
-  width: 50%;
+  width: 100%;
 }
 .form-btn {
   margin-right: 0;
+  width: 150px;
+  height: 49px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius:  0px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius:  10px;
+  background-color: #61dafb;
+  border-color: #61dafb;
+  font-size: 16px;
+  color: #ffF;
 }
-.wrapper-row {
-  display: flex;
-  justify-content: space-between;
+.wrapper-row, .wrapper-row-me, .wrapper-row-bot {
   padding: 10px;
   border-bottom: 1px solid lightgrey;
 }
-.wrapper-row > div {
-  width: 33.3333%;
+.wrapper-row-me {
+  text-align: right;
 }
-.wrapper-row:hover {
+.wrapper-row-bot {
+  text-align: left;
+}
+.wrapper-row:hover, .wrapper-row-me:hover, .wrapper-row-bot:hover {
   background: #ececec;
   cursor: pointer;
-}
-.wrapper-row-title {
-  background-color: lightgrey;
-  font-weight: 500;
-  font-size: 16px;
-}
-.wrapper-row-title:hover {
-  background: lightgrey;
 }
 
 @keyframes App-logo-spin {
