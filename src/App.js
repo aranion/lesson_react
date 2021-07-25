@@ -36,7 +36,7 @@ function App() {
         text: textInput.target.value, 
         author: authorInput.target.value 
       }
-    ]);
+    ]); 
     } else {
       alert('Заполните все поля формы');
     }
