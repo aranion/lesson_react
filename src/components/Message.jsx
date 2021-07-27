@@ -2,18 +2,20 @@ import React from "react";
 import { PropTypes } from 'prop-types';
 
 Message.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired
 }
 Message.defaultProps = {
-  id: '42x',
+  id: 'id99',
   author: 'author',
   text: ''
 };
 
 function Message(props) {
+  const { message = [] } = props;
   console.log('Start function Message');
+  // const { message = [], children } = props;
   // const [count, setCount] = React.useState(0);
 
   //componentDidMount
@@ -50,8 +52,9 @@ function Message(props) {
       <div>{props.message.author}</div>
     </div> */}
 
-    <div className={'wrapper-row-' + props.message.author.toLowerCase()}>
-      {props.message.author} : {props.message.text}
+    <div className={'wrapper-row-' + message.author.toLowerCase()}>
+      {message.author} : {message.text} : {message.id}
+      {/* {children} // текст передан из тела компоннета Message*/}
     </div>
     {/*<p>Counter = {count}</p>
     <button onClick={handleClick}>+1</button>
