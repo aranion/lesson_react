@@ -77,9 +77,14 @@ const Chat = (props) => {
     ));
   }
 
+  // if (Object.keys(messagesChat).indexOf(chatName)) {
+  //   console.log(';;');
+  // }
+
   return <div>
     <div>
-      <ChatInput onSubmit={handleMessageSubmit} />
+      {chatId && Object.keys(messagesChat).indexOf(chatName) !== -1 ? <ChatInput onSubmit={handleMessageSubmit} /> : 'Выберите чат'}
+
       {messagesChat[chatName]?.map(m => {
         return <Message key={m.id} message={m}>
           Текст внутри компонента - {m.id}

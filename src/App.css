@@ -40,12 +40,14 @@ form {
 .content-flex {
   display: flex;
   width: 100%;
+  
 }
 .content-flex > div {
   width: 60%;
   min-height: 400px;
   padding-left: 20px;
   box-sizing: border-box;
+  padding-right: 10px;  
 }
 .content-flex > div:first-child {
   width: 40%;

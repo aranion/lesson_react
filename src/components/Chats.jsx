@@ -1,9 +1,9 @@
 import React from 'react';
 import { Avatar, Button, List, ListItem, ListItemAvatar, ListItemText, TextField } from '@material-ui/core';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Chats(props) {
-  const { chatList, currentChat, messagesChat, setCurrentChat, setChatList, setMessagesChat } = props;
+  const { chatList, currentChat, setCurrentChat, setChatList, setMessagesChat } = props;
   const [author, setAuthor] = React.useState('');
 
   const handleChangeChat = (chat) => {

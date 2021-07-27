@@ -15,8 +15,8 @@ export default function Router() {
     </div>
 
     <Switch>
-      <Route path='/' exact component ={ App } />
-      <Route path='/chats' exact render={ (params) => <p>page chats</p>} />
+      <Route path='/' exact component ={ App } /> 
+      <Route path='/chats' exact render={() => <App />} />
       <Route path='/chats/:chatId' exact render={ ({match}) => <App chatId={match} /> }/>
       <Route path='/profile'><Profile /></Route>
       <Route><p>404: not found</p></Route> 
