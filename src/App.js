@@ -67,7 +67,7 @@ function App() {
         <div className='wrapper-content'>
           <h2>React - Lesson 3</h2>
           <div className="content-flex">
-            <div>
+            <div> 
               <Typography variant="h6" component="h6">Список чатов:</Typography>
             { chatList.map(chat => <List key={chat.id}>
                 <ListItem button alignItems="flex-start">
