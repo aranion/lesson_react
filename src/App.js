@@ -12,9 +12,40 @@ export const AUTHOR = {
   BOT3: 'Bot3',
 }
 
-function App(props) {
-  // const {chatId} = props;
-  
+function App() {
+  const [messagesChat, setMessagesChat] = React.useState({
+    chatid0: [{
+      id: 0,
+      author: 'Bot',
+      text: 'Тест'
+    }],
+    chatid1: [
+      {
+        id: 0,
+        author: 'Bot',
+        text: 'Тест'
+      }
+    ],
+    chatid2: [
+      {
+      id: 0,
+      author: 'Me',
+      text: 'Тестовое сообщение'
+    }],
+    chatid3: [
+      {
+      id: 0,
+      author: 'Me',
+      text: 'Тестовое сообщение'
+    }]
+  });
+  const [chatList, setChatList] = React.useState([
+    { id: "id0", name: AUTHOR.BOT, },
+    { id: "id1", name: AUTHOR.BOT1, },
+    { id: "id2", name: AUTHOR.BOT2, },
+    { id: "id3", name: AUTHOR.BOT3, },
+  ]);
+  const [currentChat, setCurrentChat] = React.useState(chatList[0]);
 
   return (
     <div className="App">
@@ -25,8 +56,18 @@ function App(props) {
         </header>
         <div className='wrapper-content'>
           <div className="content-flex">
-            <Chats />
-            <Chat />
+            <Chats 
+              chatList={chatList} 
+              currentChat={currentChat} 
+              messagesChat={messagesChat}
+              setCurrentChat={setCurrentChat}
+              setChatList={setChatList}
+              setMessagesChat={setMessagesChat}
+            />
+            <Chat 
+              messagesChat={messagesChat} 
+              setMessagesChat={setMessagesChat} 
+            />
           </div>
         </div>
       </div>

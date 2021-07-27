@@ -2,21 +2,18 @@ import React from "react";
 import { PropTypes } from 'prop-types';
 
 Message.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number,
   author: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired
 }
 Message.defaultProps = {
-  id: 'id99',
+  id: 999,
   author: 'author',
   text: ''
 };
 
 function Message(props) {
   const { message = [] } = props;
-  console.log('Start function Message');
-  // const { message = [], children } = props;
-  // const [count, setCount] = React.useState(0);
 
   //componentDidMount
   React.useEffect(() => {
@@ -42,24 +39,19 @@ function Message(props) {
   //   () => { setCount(count + 2) }, [count]
   // );
 
-  console.log('function - Render');
-
-  // <React.Fragment> === <></>
   return <React.Fragment>
-    {/* <div className='wrapper-row'>
-      <div>{props.message.id}</div>
-      <div>{props.message.text}</div>
-      <div>{props.message.author}</div>
-    </div> */}
-
     <div className={'wrapper-row-' + message.author.toLowerCase()}>
-      {message.author} : {message.text} : {message.id}
-      {/* {children} // текст передан из тела компоннета Message*/}
+      <div>
+        <div className="message-top">
+          От: <span >{message.author}</span>
+          <span className="message-span">
+            ({message.id})
+          </span>
+        </div>
+        <span className="message-p">{message.text}</span>
+      </div>
+
     </div>
-    {/*<p>Counter = {count}</p>
-    <button onClick={handleClick}>+1</button>
-    <button onClick={handleClick2}>handleClick2 + 2</button> 
-    {props.messageList.map((m, i) => <div key={i}>{m}</div>)} */}
   </React.Fragment>
 }
 

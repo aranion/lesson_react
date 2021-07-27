@@ -4,7 +4,6 @@ import { Button } from '@material-ui/core';
 
 export default function ChatInput(props) {
   const [inputValue, setInputValue] = React.useState('');
-
   const { onSubmit, } = props;
 
   const handleMessageChange = (e) => {
