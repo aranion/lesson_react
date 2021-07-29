@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Chat from './components/Chat';
-import Chats from './components/Chats';
+import Chat from './components/Chat/Chat';
+import Chats from './components/Chats/Chats';
 
 export const AUTHOR = {
   ME: 'Me',
@@ -52,7 +52,7 @@ function App() {
       <div className="App-header">
         <header>
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>React - Lesson 4</h2>
+          <h2>React - Lesson 5</h2>
         </header>
         <div className='wrapper-content'>
           <div className="content-flex">

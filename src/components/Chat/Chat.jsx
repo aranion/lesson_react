@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 // import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
-import Message from '../components/Message';
-import ChatInput from './ChatInput';
-import { AUTHOR } from '../App';
+import Message from '../Message/Message';
+import ChatInput from '../ChatInput/ChatInput';
+import { AUTHOR } from '../../App';
 
 
 const Chat = (props) => {

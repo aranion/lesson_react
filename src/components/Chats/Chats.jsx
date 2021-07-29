@@ -36,6 +36,8 @@ export default function Chats(props) {
         ['chat' + nextId]: []
       }
     ));
+
+    setAuthor('');
   }
   const handleInputAuthor = (e) => {
     setAuthor(e.target.value);
@@ -51,7 +53,6 @@ export default function Chats(props) {
           value={author}
           onChange={handleInputAuthor}
           variant='standard'
-
           fullWidth
           placeholder="Введите сообщение"
         />
