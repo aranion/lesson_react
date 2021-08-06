@@ -2,8 +2,8 @@ import React from 'react';
 import { Avatar, Button, List, ListItem, ListItemAvatar, ListItemText, TextField } from '@material-ui/core';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAddPartner, changeInputAuthor } from '../../store/actions/chatsListAction';
-import { changeDeleteChat } from '../../store/actions/chatsAction';
+import { changeAddNewChat, changeInputAuthor } from '../../store/actions/chatsListAction';
+import { changeAddChatMessages, changeDeleteChat } from '../../store/actions/chatsAction';
 
 export default function Chats(props) {
 
@@ -30,9 +30,13 @@ export default function Chats(props) {
 
     const nextId = 'chatid' + (chatsList.items.length + 1).toString();
 
-    dispatch(changeAddPartner({
+    dispatch(changeAddNewChat({
       id: nextId, name: chatsList.partner,
     }))
+    dispatch(changeAddChatMessages({
+      nextId
+    }))
+
 
     // setChatList((chatItem) => (
     //   [

@@ -1,8 +1,8 @@
-export const CHANGE_ADD_PARTNER = "CHATSLIST::CHANGE_ADD_PARTNER";
+export const CHANGE_ADD_NEW_CHAT = "CHATSLIST::CHANGE_ADD_NEW_CHAT";
 export const CHANGE_INPUT_AUTHOT = "CHATSLIST::CHANGE_INPUT_AUTHOT";
 
-export const changeAddPartner = (partner) => ({
-  type: CHANGE_ADD_PARTNER,
+export const changeAddNewChat = (partner) => ({
+  type: CHANGE_ADD_NEW_CHAT,
   payload: { partner }
 });
 export const changeInputAuthor = (value) => ({

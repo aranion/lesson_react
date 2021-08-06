@@ -1,25 +1,26 @@
-import { CHANGE_ADD_CHAT, CHANGE_ADD_MESSAGE } from "../actions/chatsAction";
+import { CHANGE_ADD_CHAT_MESSAGES, CHANGE_ADD_MESSAGE } from "../actions/chatsAction";
 
 const initialState = {
-    chatid0: [{
+    chatid1: [{
       id: 0,
       author: 'Bot',
       text: 'Тестовое сообщение 1'
     }],
-    chatid1: [{
-      id: 1,
+    chatid2: [{
+      id: 0,
       author: 'Bot',
       text: 'Тестовое сообщение 2'
     }],
-    chatid2: [],
     chatid3: [],
+    chatid4: [],
 };
 
 export default function chatReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_ADD_CHAT: {
+    case CHANGE_ADD_CHAT_MESSAGES: {
       return {
         ...state,
+        [action.payload.newChat?.nextId]: []
       }
     }
     case CHANGE_ADD_MESSAGE: { 
