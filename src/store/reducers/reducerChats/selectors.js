@@ -1,18 +1,16 @@
-import { CHANGE_ADD_CHAT_MESSAGES, CHANGE_ADD_MESSAGE } from "../actions/chatsAction";
+import { CHANGE_ADD_CHAT_MESSAGES, CHANGE_ADD_MESSAGE, CHANGE_DELETE_CHAT_MESSAGES } from "../../actions/chatsAction";
 
 const initialState = {
     chatid1: [{
       id: 0,
-      author: 'Bot',
+      author: 'BOT1',
       text: 'Тестовое сообщение 1'
     }],
     chatid2: [{
       id: 0,
-      author: 'Bot',
+      author: 'ME',
       text: 'Тестовое сообщение 2'
     }],
-    chatid3: [],
-    chatid4: [],
 };
 
 export default function chatReducer(state = initialState, action) {
@@ -32,6 +30,13 @@ export default function chatReducer(state = initialState, action) {
             action.payload.message.newMessage
           ]
       }
+    }
+    case CHANGE_DELETE_CHAT_MESSAGES: { 
+      delete state[action.payload.chatId]
+      return {
+        ...state
+      }
+      
     }
     default:
       return state;

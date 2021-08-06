@@ -35,17 +35,13 @@ function Message(props) {
   // );
 
   return <React.Fragment>
-    <div className={'wrapper-row-' + message.author.toLowerCase()}>
+    <div className={'wrapper-row-' + (message.author === 'ME' ? message.author.toLowerCase() : 'bot')}>
       <div>
         <div className="message-top">
           От: <span >{message.author}</span>
-          <span className="message-span">
-            ({message.id})
-          </span>
         </div>
         <span className="message-p">{message.text}</span>
       </div>
-
     </div>
   </React.Fragment>
 }

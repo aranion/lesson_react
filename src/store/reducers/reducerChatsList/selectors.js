@@ -1,13 +1,10 @@
-import { CHANGE_DELETE_CHAT } from "../actions/chatsAction";
-import { CHANGE_ADD_NEW_CHAT, CHANGE_INPUT_AUTHOT } from "../actions/chatsListAction";
+import { CHANGE_ADD_NEW_CHAT, CHANGE_INPUT_AUTHOT, CHANGE_DELETE_CHAT } from "../../actions/chatsListAction";
 
 const initialState = {
   partner: '',
   items: [
     { id: "chatid1", name: 'BOT1' },
-    { id: "chatid2", name: 'BOT2', },
-    { id: "chatid3", name: 'BOT3', },
-    { id: "chatid4", name: 'BOT4', },
+    { id: "chatid2", name: 'BOT2' },
   ]
 };
 

@@ -2,11 +2,10 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Message from '../Message/Message';
 import ChatInput from '../ChatInput/ChatInput';
-import { AUTHOR } from '../../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeAddMessage } from '../../store/actions/chatsAction';
 
-const Chat = (props) => {
+const Chat = () => {
   const dispatch = useDispatch();
   const { chats, chatsList } = useSelector(state => state);
   const timer = React.useRef(null);
@@ -15,14 +14,14 @@ const Chat = (props) => {
   React.useEffect(() => {
     const chatItem = chats[chatId];
     
-    if (chatItem?.length && chatItem[chatItem.length - 1]?.author === AUTHOR.ME) {
+    if (chatItem?.length && chatItem[chatItem.length - 1]?.author === 'ME') {
       timer.current = setTimeout(() => {
         dispatch(changeAddMessage({
           chatId,
           newMessage: {
-            id: chats[chatId].length + 1,
+            id: (Date.now()).toString(),
             text: "Привет!",
-            author: 'Bot'
+            author: chatsList.items.find(el => el.id === chatId).name
           }
         }))
       }, 1500)
@@ -39,20 +38,18 @@ const Chat = (props) => {
     dispatch(changeAddMessage({
       chatId,
       newMessage: {
-        id: chats[chatId].length + 1,
+        id: (Date.now()).toString(),
         text: newMessageText,
-        author: AUTHOR.ME
+        author: 'ME'
       }
     }))
   }
 
   return <div>
     <div>
-      {/* {chatId && Object.keys(messagesChat).indexOf(chatName) !== -1
+      {chatId && Object.keys(chats).indexOf(chatId) !== -1
         ? <ChatInput onSubmit={handleMessageSubmit} />
-        : 'Выберите чат'} */}
-      <ChatInput onSubmit={handleMessageSubmit} />
-
+        : 'Выберите чат'}
       {chats[chatId]?.map(m => {
         return <Message key={m.id} message={m} />
       })}
