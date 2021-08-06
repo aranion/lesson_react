@@ -1,58 +1,33 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-// import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import Message from '../Message/Message';
 import ChatInput from '../ChatInput/ChatInput';
 import { AUTHOR } from '../../App';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { changeAddMessage } from '../../store/actions/chatsAction';
 
 const Chat = (props) => {
-  const { setMessagesChat, messagesChat } = props;
-  // const [messageList, setMessageList] = React.useState([]);
+  const dispatch = useDispatch();
+  const { chats, chatsList } = useSelector(state => state);
   const timer = React.useRef(null);
-
-  // console.log('props', props);
-
-  // const params = useParams();
-  // console.log('params', params);
   const { chatId } = useParams();
-  let chatName = 'chat' + chatId;
-
-  // const match = useRouteMatch('/chats/:chatId');
-  // console.log('match', match);
-
-  // const history = useHistory();
-  // console.log('history', history);
-
-  // const location = useLocation();
-  // console.log('location', location);
-
-  // const handlerGoBack = () => {
-  //   history.goBack();
-  // }
 
   React.useEffect(() => {
-    const chat = messagesChat[chatName];
-
-    if (chat?.length && chat[chat.length - 1]?.author !== AUTHOR.BOT) {
+    const chatItem = chats[chatId];
+    
+    if (chatItem?.length && chatItem[chatItem.length - 1]?.author === AUTHOR.ME) {
       timer.current = setTimeout(() => {
-        setMessagesChat(messagesChat => (
-          {
-            ...messagesChat,
-            [chatName]:
-              [
-                ...messagesChat[chatName],
-                {
-                  id: messagesChat[chatName].length + 1,
-                  text: "Привет!",
-                  author: AUTHOR.BOT
-                }
-              ]
+        dispatch(changeAddMessage({
+          chatId,
+          newMessage: {
+            id: chats[chatId].length + 1,
+            text: "Привет!",
+            author: 'Bot'
           }
-        ));
+        }))
       }, 1500)
     }
-  }, [messagesChat, chatName, setMessagesChat]);
+  }, [chats, chatId, dispatch, chatsList]);
 
   React.useEffect(() => {
     return () => {
@@ -61,34 +36,25 @@ const Chat = (props) => {
   }, []);
 
   const handleMessageSubmit = (newMessageText) => {
-    setMessagesChat(messagesChat => (
-      {
-        ...messagesChat,
-        [chatName]:
-          [
-            ...messagesChat[chatName],
-            {
-              id: messagesChat[chatName].length + 1,
-              text: newMessageText,
-              author: AUTHOR.ME
-            }
-          ]
+    dispatch(changeAddMessage({
+      chatId,
+      newMessage: {
+        id: chats[chatId].length + 1,
+        text: newMessageText,
+        author: AUTHOR.ME
       }
-    ));
+    }))
   }
-
-  // if (Object.keys(messagesChat).indexOf(chatName)) {
-  //   console.log(';;');
-  // }
 
   return <div>
     <div>
-      {chatId && Object.keys(messagesChat).indexOf(chatName) !== -1 ? <ChatInput onSubmit={handleMessageSubmit} /> : 'Выберите чат'}
+      {/* {chatId && Object.keys(messagesChat).indexOf(chatName) !== -1
+        ? <ChatInput onSubmit={handleMessageSubmit} />
+        : 'Выберите чат'} */}
+      <ChatInput onSubmit={handleMessageSubmit} />
 
-      {messagesChat[chatName]?.map(m => {
-        return <Message key={m.id} message={m}>
-          Текст внутри компонента - {m.id}
-        </Message>
+      {chats[chatId]?.map(m => {
+        return <Message key={m.id} message={m} />
       })}
     </div>
   </div>

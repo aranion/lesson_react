@@ -7,14 +7,13 @@ Message.propTypes = {
   text: PropTypes.string.isRequired
 }
 Message.defaultProps = {
-  id: 999,
+  id: -1,
   author: 'author',
   text: ''
 };
 
 function Message(props) {
   const { message = [] } = props;
-
   //componentDidMount
   React.useEffect(() => {
     console.log('function - componentDidMount hook');
@@ -31,10 +30,6 @@ function Message(props) {
   React.useEffect(() => {
     console.log('function - componentDidUpdate hook');
   }, [])
-
-  // const handleClick = () => {
-  //   setCount(currentCount => currentCount + 1);
-  // }
   // const handleClick2 = React.useCallback(
   //   () => { setCount(count + 2) }, [count]
   // );

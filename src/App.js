@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Chat from './components/Chat/Chat';
-import Chats from './components/Chats/Chats';
+import Chats from './components/ChatsList/ChatsList';
 
 export const AUTHOR = {
   ME: 'Me',
@@ -14,25 +14,25 @@ export const AUTHOR = {
 
 function App() {
   const [messagesChat, setMessagesChat] = React.useState({
-    chatid0: [{
+    'chatid0': [{
       id: 0,
       author: 'Bot',
       text: 'Тест'
     }],
-    chatid1: [
+    'chatid1': [
       {
         id: 0,
-        author: 'Bot',
+        author: 'Bot1',
         text: 'Тест'
       }
     ],
-    chatid2: [
+    'chatid2': [
       {
       id: 0,
       author: 'Me',
       text: 'Тестовое сообщение'
     }],
-    chatid3: [
+    'chatid3': [
       {
       id: 0,
       author: 'Me',
@@ -40,10 +40,10 @@ function App() {
     }]
   });
   const [chatList, setChatList] = React.useState([
-    { id: "id0", name: AUTHOR.BOT, },
-    { id: "id1", name: AUTHOR.BOT1, },
-    { id: "id2", name: AUTHOR.BOT2, },
-    { id: "id3", name: AUTHOR.BOT3, },
+    { id: "chatid0", name: AUTHOR.BOT, },
+    { id: "chatid1", name: AUTHOR.BOT1, },
+    { id: "chatid2", name: AUTHOR.BOT2, },
+    { id: "chatid3", name: AUTHOR.BOT3, },
   ]);
   const [currentChat, setCurrentChat] = React.useState(chatList[0]);
 
@@ -64,10 +64,7 @@ function App() {
               setChatList={setChatList}
               setMessagesChat={setMessagesChat}
             />
-            <Chat 
-              messagesChat={messagesChat} 
-              setMessagesChat={setMessagesChat} 
-            />
+            <Chat />
           </div>
         </div>
       </div>

@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import Router from './Router.js/Router';
+import Router from './Router/Router';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router";
 import { Link, Redirect } from "react-router-dom";
 import App from "../App";
-import '../App.css'
+// import '../App.css'
 import Home from "../components/Home/Home";
 import Profile from "../components/Profile/Profile";
 

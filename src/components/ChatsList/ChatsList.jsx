@@ -1,46 +1,59 @@
 import React from 'react';
 import { Avatar, Button, List, ListItem, ListItemAvatar, ListItemText, TextField } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeAddPartner, changeInputAuthor } from '../../store/actions/chatsListAction';
+import { changeDeleteChat } from '../../store/actions/chatsAction';
 
 export default function Chats(props) {
-  const { chatList, currentChat, setCurrentChat, setChatList, setMessagesChat } = props;
-  const [author, setAuthor] = React.useState('');
+
+  const dispatch = useDispatch();
+  const { chatsList } = useSelector(state => state);
+  const { chatId } = useParams();
+  // const { chatList, currentChat, setCurrentChat, setChatList, setMessagesChat } = props;
+  // const [author, setAuthor] = React.useState('');
 
   const handleChangeChat = (chat) => {
-    setCurrentChat(chat);
+    // setCurrentChat(chat);
   }
   const handleDeleteChat = (id) => {
-    setChatList((chatList) => {
-      return chatList.filter(item => item.id !== id)
-    });
-    setMessagesChat(messagesChat => (
-      delete messagesChat[id]
-    ))
+    dispatch(changeDeleteChat(id))
+    // setChatList((chatsList) => {
+    //   return chatsList.filter(item => item.id !== id)
+    // });
+    // setMessagesChat(messagesChat => (
+    //   delete messagesChat[id]
+    // ))
   }
   const handleAddChat = (e) => {
     e.preventDefault();
-    const nextId = 'id' + (chatList.length + 1);
 
-    setChatList((chatItem) => (
-      [
-        ...chatItem,
-        {
-          id: nextId, name: author,
-        }
-      ]
-    ));
+    const nextId = 'chatid' + (chatsList.items.length + 1).toString();
 
-    setMessagesChat(messagesChat => (
-      {
-        ...messagesChat,
-        ['chat' + nextId]: []
-      }
-    ));
+    dispatch(changeAddPartner({
+      id: nextId, name: chatsList.partner,
+    }))
 
-    setAuthor('');
+    // setChatList((chatItem) => (
+    //   [
+    //     ...chatItem,
+    //     {
+    //       id: nextId, name: author,
+    //     }
+    //   ]
+    // ));
+
+    // setMessagesChat(messagesChat => (
+    //   {
+    //     ...messagesChat,
+    //     ['chat' + nextId]: []
+    //   }
+    // ));
+
+    // setAuthor('');
   }
   const handleInputAuthor = (e) => {
-    setAuthor(e.target.value);
+    dispatch(changeInputAuthor(e.target.value));
   }
 
   return (
@@ -50,7 +63,7 @@ export default function Chats(props) {
           id="standard-basic"
           required
           label='Чат'
-          value={author}
+          value={chatsList.partner}
           onChange={handleInputAuthor}
           variant='standard'
           fullWidth
@@ -65,12 +78,12 @@ export default function Chats(props) {
         </Button>
       </form>
       <List subheader='Список чатов:'>
-        {chatList.map((chat) =>
+        {chatsList.items.map((chat) =>
           <Link key={chat.id} to={"/chats/" + chat.id} >
             <ListItem
               button
               key={chat.id}
-              selected={chat.id === currentChat.id}
+              selected={chat.id === chatId}
               onClick={() => handleChangeChat(chat)}
             >
               <ListItemAvatar>
