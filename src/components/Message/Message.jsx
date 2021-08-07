@@ -2,14 +2,14 @@ import React from "react";
 import { PropTypes } from 'prop-types';
 
 Message.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired
 }
 Message.defaultProps = {
-  id: -1,
-  author: 'author',
-  text: ''
+  id: Date.now(),
+  author: 'Anonym',
+  text: 'Default'
 };
 
 function Message(props) {

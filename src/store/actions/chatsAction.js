@@ -14,3 +14,20 @@ export const changeAddMessage = (message) => ({
   type: CHANGE_ADD_MESSAGE,
   payload: { message }
 });
+export const changeAddMessageBot = (message) => {
+  return (dispath, getState) => {
+    dispath(changeAddMessage(message));
+
+    const timerBot = setTimeout( ()=> {
+      dispath(changeAddMessage( {
+        chatId: message.chatId,
+        newMessage: {
+          id: (Date.now()).toString(),
+          text: "Привет! O_o",
+          author: getState().chatsList.items.find(el => el.id === message.chatId).name
+        }
+      }));
+
+      clearTimeout(timerBot);
+    }, 1500)
+}};
