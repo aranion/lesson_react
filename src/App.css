@@ -52,17 +52,8 @@ form {
   border-radius: 5px;
   }
 
-.wrapper-row, .wrapper-row-me, .wrapper-row-bot {
+.wrapper-row {
   padding: 10px;
-}
-.wrapper-row-me {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-.wrapper-row-bot {
-  text-align: left;
 }
 .wrapper-row:hover, .message-p:hover {
   background: #ececec;
@@ -88,25 +79,6 @@ form {
 .wrapper-links a:hover{
   box-shadow:0px -5px 0 #61dafb inset;
 }
-.message-span {
-  font-size: 16px;
-}
-.message-top {
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-.message-p {
-  border: 1px solid;
-  border-radius: 10px;
-  padding: 10px 20px;
-  margin: 5px;
-  margin-right: 0px;
-  box-sizing: border-box;
-  font-size: 24px;
-  min-width: 77px;
-  max-width: 350px;
-  display: inline-block;
-}
 
 @keyframes App-logo-spin {
   from {
@@ -115,32 +87,4 @@ form {
   to {
     transform: rotate(360deg);
   }
-}
-
-.wrapper_chat_item {
-  position: relative;
-  margin: 15px 0;
-}
-.button_delete_chat {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  border: none;
-  background: darkgrey;
-  cursor: pointer;
-}
-.current-message {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 25px;
-  min-height: 25px;
-  border-radius: 50%;
-  color: white;
-  background: #61dafb;
 }

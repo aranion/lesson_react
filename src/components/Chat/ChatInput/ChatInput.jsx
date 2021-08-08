@@ -1,31 +1,27 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
+import { PropTypes } from 'prop-types';
+
+ChatInput.propTypes = {
+  inputMessage: PropTypes.string.isRequired,
+  handleMessageChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
+}
+ChatInput.defaultProps = {
+  inputMessage: ''
+};
 
 export default function ChatInput(props) {
-  const [inputValue, setInputValue] = React.useState('');
-  const { onSubmit, } = props;
-
-  const handleMessageChange = (e) => {
-    setInputValue(e.target.value);
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (onSubmit) {
-      onSubmit(inputValue);
-      setInputValue('');
-    }
-  }
+  const { inputMessage, handleMessageChange, handleSubmit } = props;
 
   return (
     <form onSubmit={handleSubmit}>
       <TextField
         fullWidth
         placeholder="Введите сообщение"
-        value={inputValue}
+        value={inputMessage}
         onChange={handleMessageChange}
-        className='form-input form-input-text'
         required
         label='Сообщение'
         variant='standard'
@@ -33,7 +29,6 @@ export default function ChatInput(props) {
       />
       <Button
         type="submit"
-        className='form-btn'
         variant='outlined'
       >
         Отправить

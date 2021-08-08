@@ -1,32 +1,15 @@
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeAddNewChat, changeInputAuthor } from '../../../store/actions/chatsListAction';
-import { changeAddChatMessages } from '../../../store/actions/chatsAction';
+import { PropTypes } from 'prop-types';
 
-export default function ChatListForm() {
-  const dispatch = useDispatch();
-  const { chatsList } = useSelector(state => state);
-  const urlHistory = useHistory();
+ChatListForm.propTypes = {
+  chatsList: PropTypes.object.isRequired,
+  handleAddChat: PropTypes.func.isRequired,
+  handleInputAuthor: PropTypes.func.isRequired
+}
 
-  const generateID = () => {
-    const nextId = 'chatid' + (Date.now()).toString();
-    return nextId;
-  }
-  const handleAddChat = (e) => {
-    e.preventDefault();
-
-    const nextId = generateID();
-
-    dispatch(changeAddNewChat({ id: nextId, name: chatsList.partner }));
-    dispatch(changeAddChatMessages({ nextId }));
-    dispatch(changeInputAuthor(''));
-    urlHistory.push('/chats/' + nextId);
-  }
-  const handleInputAuthor = (e) => {
-    dispatch(changeInputAuthor(e.target.value));
-  }
+export default function ChatListForm(props) {
+  const { chatsList, handleAddChat, handleInputAuthor } = props;
 
   return (
     <form onSubmit={handleAddChat}>
@@ -34,17 +17,13 @@ export default function ChatListForm() {
         id="standard-basic"
         required
         label='Чат'
-        value={chatsList.partner}
+        value={chatsList.inputPartner}
         onChange={handleInputAuthor}
         variant='standard'
         fullWidth
         placeholder="Введите сообщение"
       />
-      <Button
-        type="submit"
-        className='form-btn'
-        variant='outlined'
-      >
+      <Button type="submit" variant='outlined' >
         Создать
       </Button>
     </form>
