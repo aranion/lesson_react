@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import App from "../App";
 // import '../App.css'
 import Home from "../components/Home/Home";
+import News from "../components/News/News";
 import Profile from "../components/Profile/Profile";
 
 export default function Router() {
@@ -13,6 +14,7 @@ export default function Router() {
       <Link to="/" > Home </Link>
       <Link to="/chats" > Chats </Link>
       <Link to="/profile" > Profile </Link>
+      <Link to="/news" > News </Link>
     </div>
 
     <Switch>
@@ -20,6 +22,7 @@ export default function Router() {
       <Route path='/chats' exact render={() => <App />} />
       <Route path='/chats/:chatId' exact render={ ({match}) => <App chatId={match} /> }/>
       <Route path='/profile'><Profile /></Route>
+      <Route path='/news'><News /></Route>
       <Route><p>404: not found</p></Route> 
       <Redirect to='/' />
     </Switch>

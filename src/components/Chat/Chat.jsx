@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import Message from './Message/Message';
 import ChatInput from './ChatInput/ChatInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeInputMessage, changeAddMessageSaga } from '../../store/actions/chatsAction';
+import { changeInputMessage, changeAddMessageBot } from '../../store/actions/chatsAction';
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -12,18 +12,8 @@ const Chat = () => {
   const chatsList = useSelector(state => state.chatsList);
   const { chatId } = useParams();
 
-  // const handleMessageSubmit = (newMessageText) => {
-  //   dispatch(changeAddMessageBot({
-  //     chatId,
-  //     newMessage: {
-  //       id: (Date.now()).toString(),
-  //       text: newMessageText,
-  //       author: 'ME'
-  //     }
-  //   }))
-  // };
   const handleMessageSubmit = (newMessageText) => {
-    dispatch(changeAddMessageSaga({
+    dispatch(changeAddMessageBot({
       chatId,
       newMessage: {
         id: (Date.now()).toString(),
@@ -31,7 +21,17 @@ const Chat = () => {
         author: 'ME'
       }
     }))
-  }
+  };
+  // const handleMessageSubmit = (newMessageText) => {
+  //   dispatch(changeAddMessageSaga({
+  //     chatId,
+  //     newMessage: {
+  //       id: (Date.now()).toString(),
+  //       text: newMessageText,
+  //       author: 'ME'
+  //     }
+  //   }))
+  // }
   const handleMessageChange = (e) => {
     dispatch(changeInputMessage(e.target.value));
   }

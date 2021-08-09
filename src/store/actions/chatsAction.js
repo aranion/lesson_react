@@ -29,7 +29,13 @@ export const changeAddMessageBot = (message) => {
   return (dispath, getState) => {
     dispath(changeAddMessage(message));
 
+    const timerPrint = setTimeout( ()=> {
+      dispath(changeVisiblePrint(true));
+      clearTimeout(timerPrint);
+    }, 500)
+
     const timerBot = setTimeout( ()=> {
+      dispath(changeVisiblePrint(false));
       dispath(changeAddMessage( {
         chatId: message.chatId,
         newMessage: {
@@ -40,7 +46,7 @@ export const changeAddMessageBot = (message) => {
       }));
 
       clearTimeout(timerBot);
-    }, 1500)
+    }, 2000)
 }};
 
 export const changeAddMessageSaga = (message) => ({

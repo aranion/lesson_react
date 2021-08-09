@@ -1,4 +1,4 @@
-import { CHANGE_NAME, CHANGE_AGE, CHANGE_CHECK_BOX } from "../actions/profileAction";
+import { CHANGE_NAME, CHANGE_AGE, CHANGE_CHECK_BOX } from "../../actions/profileAction";
 
 const initialState = {
   name:'Иван',
