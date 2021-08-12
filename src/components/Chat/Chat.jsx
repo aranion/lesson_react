@@ -5,33 +5,28 @@ import Message from './Message/Message';
 import ChatInput from './ChatInput/ChatInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeInputMessage, changeAddMessageBot } from '../../store/actions/chatsAction';
+import firebase from 'firebase';
 
 const Chat = () => {
   const dispatch = useDispatch();
-  const chats = useSelector(state => state.chats);
-  const chatsList = useSelector(state => state.chatsList);
+  const { chatsList, chats } = useSelector(state => state);
   const { chatId } = useParams();
+  const db = firebase.database();
 
   const handleMessageSubmit = (newMessageText) => {
+    const newMessage = {
+      id: (Date.now()).toString(),
+      text: newMessageText,
+      author: 'ME'
+    };
+
+    db.ref('messages').child(chatId).push(newMessage);
+
     dispatch(changeAddMessageBot({
       chatId,
-      newMessage: {
-        id: (Date.now()).toString(),
-        text: newMessageText,
-        author: 'ME'
-      }
-    }))
+      newMessage
+    }));
   };
-  // const handleMessageSubmit = (newMessageText) => {
-  //   dispatch(changeAddMessageSaga({
-  //     chatId,
-  //     newMessage: {
-  //       id: (Date.now()).toString(),
-  //       text: newMessageText,
-  //       author: 'ME'
-  //     }
-  //   }))
-  // }
   const handleMessageChange = (e) => {
     dispatch(changeInputMessage(e.target.value));
   }

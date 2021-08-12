@@ -1,9 +1,10 @@
-import { CHANGE_NAME, CHANGE_AGE, CHANGE_CHECK_BOX } from "../../actions/profileAction";
+import { CHANGE_NAME, CHANGE_AGE, CHANGE_CHECK_BOX, CHANGE_IS_AUTHED } from "../../actions/profileAction";
 
 const initialState = {
   name:'Иван',
   age: 29,
-  checkBox: false
+  checkBox: false,
+  isAuthed: false
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -24,6 +25,12 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         checkBox: action.payload.checkBox
+      }
+    }
+    case CHANGE_IS_AUTHED: {
+      return {
+        ...state,
+        isAuthed: action.payload.isAuthed
       }
     }
     default:

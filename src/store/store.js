@@ -1,12 +1,13 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
-import profileReducer from "./reducers/reducerProfile/selektor";
+import profileReducer from "./reducers/reducerProfile/selector";
 import chatsReducer from "./reducers/reducerChats/selectors";
 import chatsListReducer from './reducers/reducerChatsList/selectors';
 import newsReducer from "./reducers/reducerNews/selectors";
 import storage from 'redux-persist/lib/storage';
 import persistStor from 'redux-persist/lib/persistStore';
 import persistReducer from 'redux-persist/lib/persistReducer';
+import loginReducer from './reducers/reducerLogin/selector';
 // import createSagaMiddleware from "redux-saga";
 // import mySaga from './sagas';
 
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   chats: chatsReducer,
   chatsList: chatsListReducer,
-  news: newsReducer
+  news: newsReducer,
+  login: loginReducer
 });
 const persistReducers = persistReducer( persistConfig, rootReducer);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
