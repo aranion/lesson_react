@@ -24,8 +24,8 @@ export default function Router() {
   <div>
     <Switch>
       <Route path='/' exact component ={ Home } /> 
-      <PrivateRoute path='/chats' exact render={() => <App />} />
-      <PrivateRoute path='/chats/:chatId' exact render={ ({match}) => <App chatId={match} /> }/>
+      <PrivateRoute path='/chat' exact render={() => <App />} />
+      <PrivateRoute path='/chat/:chatId' exact render={ ({match}) => <App chatId={match} /> }/>
       <PrivateRoute path='/profile'><Profile /></PrivateRoute>
       <Route path='/login' component={Login}/>
       <Route path='/news'><News /></Route>

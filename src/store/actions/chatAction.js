@@ -1,3 +1,5 @@
+// import firebase from 'firebase';
+
 export const CHANGE_ADD_CHAT_MESSAGES = "CHATS::CHANGE_ADD_CHAT_MESSAGES";
 export const CHANGE_DELETE_CHAT_MESSAGES = "CHATS::CHANGE_DELETE_CHAT_MESSAGES";
 export const CHANGE_ADD_MESSAGE = "CHATS::CHANGE_ADD_MESSAGE";
@@ -27,6 +29,9 @@ export const changeVisiblePrint = (value) => ({
 });
 export const changeAddMessageBot = (message) => {
   return (dispath, getState) => {
+    // const db = firebase.database();
+    // db.ref('messages').child(message.chatId).push(message);  
+
     dispath(changeAddMessage(message));
 
     const timerPrint = setTimeout( ()=> {
@@ -36,18 +41,48 @@ export const changeAddMessageBot = (message) => {
 
     const timerBot = setTimeout( ()=> {
       dispath(changeVisiblePrint(false));
+      // db.ref('messages').child(message.chatId).push({
+      //   chatId: message.chatId,
+      //   newMessage: {
+      //     id: (Date.now()).toString(),
+      //     text: "Привет! O_o",
+      //     author: getState().chatList.items.find(el => el.id === message.chatId).name
+      //   }}
+      // );  
       dispath(changeAddMessage( {
         chatId: message.chatId,
         newMessage: {
           id: (Date.now()).toString(),
           text: "Привет! O_o",
-          author: getState().chatsList.items.find(el => el.id === message.chatId).name
+          author: getState().chatList.items.find(el => el.id === message.chatId).name
         }
       }));
 
       clearTimeout(timerBot);
     }, 2000)
 }};
+
+// export const subscribeOmMessagesChangings = (chatId) => {
+//   return (dispatch, getState) => {
+//     const db = firebase.database();
+// debugger
+//     db.ref('chats').child(chatId).on('child_added', (snapshot) => {
+//       debugger
+//       dispatch(changeAddMessage({
+//         chatId,
+//         newMessage: snapshot.val()
+//       }))
+//     })
+//     db.ref('chats').child(chatId).on('child_changed', (snapshot) => {
+//       debugger
+//       dispatch(changeAddMessage({
+//         chatId,
+//         newMessage: snapshot.val()
+//       }))
+//     })
+//   }
+  
+// }
 
 export const changeAddMessageSaga = (message) => ({
   type: CHANGE_ADD_MESSAGE_SAGA,

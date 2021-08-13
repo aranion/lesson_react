@@ -4,12 +4,14 @@ import {
   CHANGE_DELETE_CHAT_MESSAGES, 
   CHANGE_INPUT_MESSAGE,
   CHANGE_VISIBLE_PRINT
-} from "../../actions/chatsAction";
+} from "../../actions/chatAction";
 
 const initialState = {
     isVisiblePrint: false,
     inputMessage: '',
     items: {
+      // chatid1:[],
+      // chatid2: []
       chatid1: [{
         id: 0,
         author: 'BOT1',
@@ -37,7 +39,6 @@ export default function chatReducer(state = initialState, action) {
     case CHANGE_ADD_MESSAGE: { 
       return {
         ...state,
-        // ...state[action.payload.message.chatId].push(action.payload.message.newMessage)
         items: { 
           ...state.items, 
           [action.payload.message.chatId]: 

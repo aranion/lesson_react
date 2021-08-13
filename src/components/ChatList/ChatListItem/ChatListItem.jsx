@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 
 ChatListItem.propTypes = {
   chat: PropTypes.object.isRequired,
-  chats: PropTypes.object.isRequired,
+  chatList: PropTypes.object.isRequired,
   chatId: PropTypes.string.isRequired,
   handleDeleteChat: PropTypes.func.isRequired
 }
@@ -14,11 +14,11 @@ ChatListItem.defaultProps = {
 };
 
 export default function ChatListItem(props) {
-  const { chat, chats, chatId, handleDeleteChat } = props;
+  const { chat, chatList, chatId, handleDeleteChat } = props;
 
   return (
     <div className='wrapper_chat_item'>
-      <Link to={"/chats/" + chat.id} >
+      <Link to={"/chat/" + chat.id} >
         <ListItem
           button
           key={chat.id}
@@ -40,8 +40,8 @@ export default function ChatListItem(props) {
       <button className='button_delete_chat' onClick={() => handleDeleteChat(chat.id)}>
         X
       </button>
-      {chats[chat.id].length !== 0
-        ? <div className='current-message'>{chats[chat.id].length}</div>
+      {chatList[chat.id]?.length !== 0
+        ? <div className='current-message'>{chatList[chat.id]?.length}</div>
         : ''
       }
     </div>

@@ -6,18 +6,18 @@ import firebase from 'firebase';
 const Menu = () => {
   const isAuthed = useSelector(state => state.profile.isAuthed);
 
-  const clickSignUp = () => {
+  const clickLogOut = () => {
     firebase.auth().signOut();
   };
 
   return (
     <div className="wrapper-links">
       <Link to="/" > Home </Link>
-      <Link to="/chats" > Chats </Link>
+      <Link to="/chat" > Chat </Link>
       <Link to="/profile" > Profile </Link>
       <Link to="/news" > News </Link>
       {isAuthed
-        ? <Link to="/login" onClick={clickSignUp}>Sign Up</Link>
+        ? <Link to="/" onClick={clickLogOut}>log out</Link>
         : <Link to="/login" > Login </Link>
       }
     </div>

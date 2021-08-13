@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Chat from './components/Chat/Chat';
-import Chats from './components/ChatsList/ChatsList';
+import ChatList from './components/ChatList/ChatList';
 
 function App() {
   return (
@@ -10,11 +10,11 @@ function App() {
       <div className="App-header">
         <header>
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>React - Lesson 8</h2>
+          <h2>React - Lesson 9</h2>
         </header>
         <div className='wrapper-content'>
           <div className="content-flex">
-            <Chats />
+            <ChatList />
             <Chat />
           </div>
         </div>

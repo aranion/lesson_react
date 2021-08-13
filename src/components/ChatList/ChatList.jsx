@@ -5,33 +5,40 @@ import ChatListItem from './ChatListItem/ChatListItem';
 import ChatListForm from './ChatListForm/ChatListForm';
 import './chatsList.css';
 import { useHistory, useParams } from 'react-router-dom';
-import { changeAddChatMessages, changeDeleteChatMessages } from '../../store/actions/chatsAction';
-import { changeAddNewChat, changeDeleteChat, changeInputAuthor } from '../../store/actions/chatsListAction';
+import { changeAddChatMessages, changeDeleteChatMessages } from '../../store/actions/chatAction';
+import { changeAddNewChat, changeDeleteChat, changeInputAuthor } from '../../store/actions/chatListAction';
+import firebase from 'firebase';
 
-export default function ChatsList() {
+export default function ChatList() {
   const dispatch = useDispatch();
-  const { chats, chatsList } = useSelector(state => state);
+  const { chat, chatList } = useSelector(state => state);
   const { chatId } = useParams();
   const urlHistory = useHistory();
+  const db = firebase.database();
+
+
 
   const handleDeleteChat = (id) => {
     dispatch(changeDeleteChatMessages(id))
     dispatch(changeDeleteChat(id))
-    urlHistory.push('/chats/')
+    urlHistory.push('/chat/')
   }
   const generateID = () => {
-    const nextId = 'chatid' + (Date.now()).toString();
-    return nextId;
+    return 'chatid' + (Date.now()).toString();
   }
   const handleAddChat = (e) => {
     e.preventDefault();
-
     const nextId = generateID();
+    urlHistory.push('/chat/' + nextId);
 
-    dispatch(changeAddNewChat({ id: nextId, name: chatsList.inputPartner }));
+    //
+    db.ref('chatList').child('items').child(chatId || nextId).push({ id: nextId, name: chatList.inputPartner });
+    db.ref('chat').child('items').child(chatId || nextId).push({ id: nextId });
+    //
+
+    dispatch(changeAddNewChat({ id: nextId, name: chatList.inputPartner }));
     dispatch(changeAddChatMessages({ nextId }));
     dispatch(changeInputAuthor(''));
-    urlHistory.push('/chats/' + nextId);
   }
   const handleInputAuthor = (e) => {
     dispatch(changeInputAuthor(e.target.value));
@@ -41,18 +48,18 @@ export default function ChatsList() {
   return (
     <div>
       <ChatListForm
-        chatsList={chatsList}
+        chatList={chatList}
         handleAddChat={handleAddChat}
         handleInputAuthor={handleInputAuthor}
       />
       <List subheader='Список чатов:'>
-        {chatsList.items.length === 0
+        {chatList.items.length === 0
           ? <div>Список чатов пуст :(</div>
-          : chatsList.items.map((chat) =>
+          : chatList.items.map((item) =>
             <ChatListItem
-              key={chat.id}
-              chat={chat}
-              chats={chats.items}
+              key={item.id}
+              chat={item}
+              chatList={chat.items}
               chatId={chatId}
               handleDeleteChat={handleDeleteChat}
             />

@@ -3,13 +3,13 @@ import { Button, TextField } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 
 ChatListForm.propTypes = {
-  chatsList: PropTypes.object.isRequired,
+  chatList: PropTypes.object.isRequired,
   handleAddChat: PropTypes.func.isRequired,
   handleInputAuthor: PropTypes.func.isRequired
 }
 
 export default function ChatListForm(props) {
-  const { chatsList, handleAddChat, handleInputAuthor } = props;
+  const { chatList, handleAddChat, handleInputAuthor } = props;
 
   return (
     <form onSubmit={handleAddChat}>
@@ -17,7 +17,7 @@ export default function ChatListForm(props) {
         id="standard-basic"
         required
         label='Чат'
-        value={chatsList.inputPartner}
+        value={chatList.inputPartner}
         onChange={handleInputAuthor}
         variant='standard'
         fullWidth

@@ -4,27 +4,56 @@ import { useParams } from 'react-router-dom';
 import Message from './Message/Message';
 import ChatInput from './ChatInput/ChatInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeInputMessage, changeAddMessageBot } from '../../store/actions/chatsAction';
+import { changeInputMessage, changeAddMessageBot } from '../../store/actions/chatAction';
 import firebase from 'firebase';
+
+//
+const subscribeOmMessagesChangings = (chatId) => {
+  const db = firebase.database();
+
+  db.ref('chat').child('items').child(chatId).on('child_added', snapshot => {
+    console.log('child_added', snapshot.val());
+  })
+  db.ref('chat').child('items').child(chatId).on('child_changed', snapshot => {
+    console.log('child_changed', snapshot.val());
+  })
+}
+//
 
 const Chat = () => {
   const dispatch = useDispatch();
-  const { chatsList, chats } = useSelector(state => state);
+  const { chatList, chat } = useSelector(state => state);
   const { chatId } = useParams();
+
   const db = firebase.database();
 
+  React.useEffect(() => {
+    if (chatId) {
+      db.ref('chat').child('items').child(chatId).get().then(snapshot => {
+        const chatArr = [];
+        snapshot.forEach(item => { chatArr.push(item.val()) });
+        console.log(chatArr);
+      })
+    }
+    subscribeOmMessagesChangings(chatId)
+    // dispatch(subscribeOmMessagesChangings({ chatId }));
+  }, [db, chatId]);
+
   const handleMessageSubmit = (newMessageText) => {
-    const newMessage = {
+    //
+    db.ref('chat').child('items').child(chatId).push({
       id: (Date.now()).toString(),
       text: newMessageText,
       author: 'ME'
-    };
-
-    db.ref('messages').child(chatId).push(newMessage);
-
+    })
+    //
     dispatch(changeAddMessageBot({
       chatId,
-      newMessage
+      newMessage: {
+        id: (Date.now()).toString(),
+        text: newMessageText,
+        author: 'ME'
+      }
     }));
   };
   const handleMessageChange = (e) => {
@@ -33,24 +62,25 @@ const Chat = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (handleMessageSubmit) {
-      handleMessageSubmit(chats.inputMessage);
+      handleMessageSubmit(chat.inputMessage);
       dispatch(changeInputMessage(''));
     }
   }
   return (
     <div>
-      {chatId && Object.keys(chats.items).indexOf(chatId) !== -1
+      {/* {true */}
+      {chatId && Object.keys(chat.items).indexOf(chatId) !== -1
         ? <ChatInput
-          inputMessage={chats.inputMessage}
+          inputMessage={chat.inputMessage}
           handleMessageChange={handleMessageChange}
           handleSubmit={handleSubmit}
         />
         : 'Выберите чат'}
-      {chats.items[chatId]?.map(m => <Message key={m.id} message={m} />)}
-      {chatId && chats.isVisiblePrint
+      {chat.items[chatId]?.map(m => <Message key={m.id} message={m} />)}
+      {chatId && chat.isVisiblePrint
         ? <div className='chat-process-print'>
           <div className="loading">
-            {chatsList.items.find(el => el.id === chatId)?.name}
+            {chatList.items.find(el => el.id === chatId)?.name}
             : печатает...
           </div>
         </div>

@@ -2,31 +2,31 @@ import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 import React from 'react';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSetEmail, loginSetError, loginSetIsSigningUp, loginSetPassword } from '../../store/actions/loginAction';
+import { setEmail, setError, setIsSigningUp, setPassword } from '../../store/actions/loginAction';
 
 const Login = () => {
   const dispatch = useDispatch();
   const { email, password, error, isSigningUp } = useSelector(state => state.login);
 
-  const handleChangeEmail = (e) => dispatch(loginSetEmail(e.target.value));
-  const handleChangePassword = (e) => dispatch(loginSetPassword(e.target.value));
+  const handleChangeEmail = (e) => dispatch(setEmail(e.target.value));
+  const handleChangePassword = (e) => dispatch(setPassword(e.target.value));
   const handleLogin = async () => {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
     } catch (err) {
-      dispatch(loginSetError(err.message));
+      dispatch(setError(err.message));
     }
   };
   const handleSignUp = async () => {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
     } catch (err) {
-      dispatch(loginSetError(err.message));
+      dispatch(setError(err.message));
     }
   };
   const handleSubmit = async () => {
     if (!email || !password) {
-      dispatch(loginSetError('Заполните все поля!'));
+      dispatch(setError('Заполните все поля!'));
       return;
     }
     if (isSigningUp) {
@@ -36,7 +36,7 @@ const Login = () => {
     handleLogin();
   }
   const handleIsSigninUpChange = (e) => {
-    dispatch(loginSetIsSigningUp(e.target.checked));
+    dispatch(setIsSigningUp(e.target.checked));
   }
 
   return <div>
