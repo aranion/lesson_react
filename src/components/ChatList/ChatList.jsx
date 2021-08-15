@@ -5,22 +5,24 @@ import ChatListItem from './ChatListItem/ChatListItem';
 import ChatListForm from './ChatListForm/ChatListForm';
 import './chatsList.css';
 import { useHistory, useParams } from 'react-router-dom';
-import { changeAddChatMessages, changeDeleteChatMessages } from '../../store/actions/chatAction';
-import { changeAddNewChat, changeDeleteChat, changeInputAuthor } from '../../store/actions/chatListAction';
-import firebase from 'firebase';
+import { changeAddChatDB, changeDeleteChat, changeDeleteChatFromDB, changeInputAuthor, subscribeOmChatListChangings } from '../../store/actions/chatListAction';
+import { changeAddChatMessagesDB, changeDeleteChatMessages, changeDeleteChatMessagesFromDB } from '../../store/actions/chatAction';
 
 export default function ChatList() {
   const dispatch = useDispatch();
   const { chat, chatList } = useSelector(state => state);
   const { chatId } = useParams();
   const urlHistory = useHistory();
-  const db = firebase.database();
 
+  React.useEffect(() => {
+    dispatch(subscribeOmChatListChangings(chatId));
+  }, [dispatch, chatId]);
 
-
-  const handleDeleteChat = (id) => {
-    dispatch(changeDeleteChatMessages(id))
-    dispatch(changeDeleteChat(id))
+  const handleDeleteChat = (chatId) => {
+    dispatch(changeDeleteChatFromDB(chatId));
+    dispatch(changeDeleteChat(chatId));
+    dispatch(changeDeleteChatMessagesFromDB(chatId));
+    dispatch(changeDeleteChatMessages(chatId));
     urlHistory.push('/chat/')
   }
   const generateID = () => {
@@ -31,19 +33,17 @@ export default function ChatList() {
     const nextId = generateID();
     urlHistory.push('/chat/' + nextId);
 
-    //
-    db.ref('chatList').child('items').child(chatId || nextId).push({ id: nextId, name: chatList.inputPartner });
-    db.ref('chat').child('items').child(chatId || nextId).push({ id: nextId });
-    //
-
-    dispatch(changeAddNewChat({ id: nextId, name: chatList.inputPartner }));
-    dispatch(changeAddChatMessages({ nextId }));
+    dispatch(changeAddChatDB({ chatId: nextId, name: chatList.inputPartner }));
+    dispatch(changeAddChatMessagesDB(nextId));
+    // dispatch(changeAddMessage({
+    //   chatId: nextId,
+    //   newMessage: {}
+    // }));
     dispatch(changeInputAuthor(''));
   }
   const handleInputAuthor = (e) => {
     dispatch(changeInputAuthor(e.target.value));
   }
-
 
   return (
     <div>
@@ -53,11 +53,11 @@ export default function ChatList() {
         handleInputAuthor={handleInputAuthor}
       />
       <List subheader='Список чатов:'>
-        {chatList.items.length === 0
+        {Object.values(chatList.items).length === 0
           ? <div>Список чатов пуст :(</div>
-          : chatList.items.map((item) =>
+          : Object.values(chatList.items).map((item) =>
             <ChatListItem
-              key={item.id}
+              key={item.chatId}
               chat={item}
               chatList={chat.items}
               chatId={chatId}

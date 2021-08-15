@@ -1,4 +1,4 @@
-// import firebase from 'firebase';
+import firebase from 'firebase';
 
 export const CHANGE_ADD_CHAT_MESSAGES = "CHATS::CHANGE_ADD_CHAT_MESSAGES";
 export const CHANGE_DELETE_CHAT_MESSAGES = "CHATS::CHANGE_DELETE_CHAT_MESSAGES";
@@ -27,64 +27,82 @@ export const changeVisiblePrint = (value) => ({
   type: CHANGE_VISIBLE_PRINT,
   payload: value
 });
-export const changeAddMessageBot = (message) => {
-  return (dispath, getState) => {
-    // const db = firebase.database();
-    // db.ref('messages').child(message.chatId).push(message);  
-
-    dispath(changeAddMessage(message));
-
-    const timerPrint = setTimeout( ()=> {
-      dispath(changeVisiblePrint(true));
-      clearTimeout(timerPrint);
-    }, 500)
-
-    const timerBot = setTimeout( ()=> {
-      dispath(changeVisiblePrint(false));
-      // db.ref('messages').child(message.chatId).push({
-      //   chatId: message.chatId,
-      //   newMessage: {
-      //     id: (Date.now()).toString(),
-      //     text: "Привет! O_o",
-      //     author: getState().chatList.items.find(el => el.id === message.chatId).name
-      //   }}
-      // );  
-      dispath(changeAddMessage( {
-        chatId: message.chatId,
-        newMessage: {
-          id: (Date.now()).toString(),
-          text: "Привет! O_o",
-          author: getState().chatList.items.find(el => el.id === message.chatId).name
-        }
-      }));
-
-      clearTimeout(timerBot);
-    }, 2000)
-}};
-
-// export const subscribeOmMessagesChangings = (chatId) => {
-//   return (dispatch, getState) => {
-//     const db = firebase.database();
-// debugger
-//     db.ref('chats').child(chatId).on('child_added', (snapshot) => {
-//       debugger
-//       dispatch(changeAddMessage({
-//         chatId,
-//         newMessage: snapshot.val()
-//       }))
-//     })
-//     db.ref('chats').child(chatId).on('child_changed', (snapshot) => {
-//       debugger
-//       dispatch(changeAddMessage({
-//         chatId,
-//         newMessage: snapshot.val()
-//       }))
-//     })
-//   }
-  
-// }
-
 export const changeAddMessageSaga = (message) => ({
   type: CHANGE_ADD_MESSAGE_SAGA,
   payload: { message }
 });
+
+// >>-- Работа с БД -- >> //
+
+export const changeAddChatMessagesDB = (chatId) => {
+  const db = firebase.database();
+
+  return (dispatch, getState) => {
+    // -> записать данные в БД
+      db.ref('chat').child('items').child(chatId).push({chatId});
+    // <-
+  }
+};
+export const changeDeleteChatMessagesFromDB = (chatId) => {
+  const db = firebase.database();
+
+  return (dispatsh, getState) => {
+    try {
+      db.ref('chat').child('items').child(chatId).remove();
+    } catch(error) {
+      console.error(error.message);
+    }
+  }
+};
+export const changeAddMessageBot = (message) => {
+  const db = firebase.database();
+
+  return (dispath, getState) => {
+    // -> записать данные в БД
+    db.ref('chat').child('items').child(message.chatId).push(message.newMessage);
+    // <-
+
+    const tmr1 = setTimeout(()=> {
+      dispath(changeVisiblePrint(true));
+      clearTimeout(tmr1);
+    }, 500)
+
+    const timerBot = setTimeout( ()=> {
+      dispath(changeVisiblePrint(false));
+     
+      // -> записать данные в БД
+      db.ref('chat').child('items').child(message.chatId).push({
+        id: (Date.now()).toString(),
+        text: "Привет! O_o",
+        author: getState().chatList.items[message.chatId]?.name
+      });
+      // <-
+      clearTimeout(timerBot);
+    }, 2000)
+}};
+
+export const subscribeOmChatChangings = (chatId) => {
+  const db = firebase.database();
+
+  return (dispatch, getState) => {
+
+    // -> подписываемся на события изменения/обавления из/в БД
+    db.ref('chat').child('items').child(chatId).on('child_added', snapshot => {
+      console.log('chat child_added');
+      
+      dispatch(changeAddMessage({
+        chatId,
+        newMessage: snapshot.val()
+      }));
+    });
+    db.ref('chat').child('items').child(chatId).on('child_changed', snapshot => {
+      console.log('chat child_changed');
+      
+      dispatch(changeAddMessage({
+        chatId,
+        newMessage: snapshot.val()
+      }));
+    })
+    // <-
+  }
+}

@@ -4,20 +4,23 @@ import { useParams } from 'react-router-dom';
 import Message from './Message/Message';
 import ChatInput from './ChatInput/ChatInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeInputMessage, changeAddMessageBot } from '../../store/actions/chatAction';
-import firebase from 'firebase';
+import { changeInputMessage, changeAddMessageBot, subscribeOmChatChangings } from '../../store/actions/chatAction';
 
-//
-const subscribeOmMessagesChangings = (chatId) => {
-  const db = firebase.database();
+// вернуть данные при обновлении (подписка на события)
+  // const subscribeOmMessagesChangings = (chatId, callback) => {
+  //   const db = firebase.database();
 
-  db.ref('chat').child('items').child(chatId).on('child_added', snapshot => {
-    console.log('child_added', snapshot.val());
-  })
-  db.ref('chat').child('items').child(chatId).on('child_changed', snapshot => {
-    console.log('child_changed', snapshot.val());
-  })
-}
+  //   if (chatId) {
+  //     db.ref('chat').child('items').child(chatId).on('child_added', snapshot => {
+  //       console.log('child_added', snapshot.val());
+  //       callback(snapshot.val());
+  //     })
+  //     db.ref('chat').child('items').child(chatId).on('child_changed', snapshot => {
+  //       console.log('child_changed', snapshot.val());
+  //       callback(snapshot.val());
+  //     })
+  //   }
+  // }
 //
 
 const Chat = () => {
@@ -25,28 +28,24 @@ const Chat = () => {
   const { chatList, chat } = useSelector(state => state);
   const { chatId } = useParams();
 
-  const db = firebase.database();
-
   React.useEffect(() => {
+    //получить данные с БД
+    // if (chatId) {
+      //получение без подписки на событие
+      // db.ref('chat').child('items').child(chatId).get().then(snapshot => {
+      //   const chatArr = [];
+      //   snapshot.forEach(item => { chatArr.push(item.val()) });
+      //   console.log('chatArr', chatArr);
+      // })
+      //
+    // }
+    //
     if (chatId) {
-      db.ref('chat').child('items').child(chatId).get().then(snapshot => {
-        const chatArr = [];
-        snapshot.forEach(item => { chatArr.push(item.val()) });
-        console.log(chatArr);
-      })
+      dispatch(subscribeOmChatChangings(chatId));
     }
-    subscribeOmMessagesChangings(chatId)
-    // dispatch(subscribeOmMessagesChangings({ chatId }));
-  }, [db, chatId]);
+  }, [dispatch, chatId]);
 
   const handleMessageSubmit = (newMessageText) => {
-    //
-    db.ref('chat').child('items').child(chatId).push({
-      id: (Date.now()).toString(),
-      text: newMessageText,
-      author: 'ME'
-    })
-    //
     dispatch(changeAddMessageBot({
       chatId,
       newMessage: {
@@ -68,19 +67,23 @@ const Chat = () => {
   }
   return (
     <div>
-      {/* {true */}
-      {chatId && Object.keys(chat.items).indexOf(chatId) !== -1
+      {chatId && chat?.items && Object.keys(chat.items).indexOf(chatId) !== -1
         ? <ChatInput
           inputMessage={chat.inputMessage}
           handleMessageChange={handleMessageChange}
           handleSubmit={handleSubmit}
         />
         : 'Выберите чат'}
-      {chat.items[chatId]?.map(m => <Message key={m.id} message={m} />)}
+      {chat.items[chatId]?.map(m => {
+        if (m.id) {
+          return <Message key={m.id} message={m} />
+        }
+        return '';
+      })}
       {chatId && chat.isVisiblePrint
         ? <div className='chat-process-print'>
           <div className="loading">
-            {chatList.items.find(el => el.id === chatId)?.name}
+            {chatList.items[chatId]?.name}
             : печатает...
           </div>
         </div>

@@ -18,11 +18,11 @@ export default function ChatListItem(props) {
 
   return (
     <div className='wrapper_chat_item'>
-      <Link to={"/chat/" + chat.id} >
+      <Link to={"/chat/" + chat.chatId} >
         <ListItem
           button
-          key={chat.id}
-          selected={chat.id === chatId}
+          key={chat.chatId}
+          selected={chat.chatId === chatId}
         >
           <ListItemAvatar>
             <Avatar alt={chat.name} src="/" />
@@ -37,11 +37,11 @@ export default function ChatListItem(props) {
           />
         </ListItem>
       </Link>
-      <button className='button_delete_chat' onClick={() => handleDeleteChat(chat.id)}>
-        X
+      <button className='button_delete_chat' onClick={() => handleDeleteChat(chat.chatId)}>
+        {chat.chatId}
       </button>
-      {chatList[chat.id]?.length !== 0
-        ? <div className='current-message'>{chatList[chat.id]?.length}</div>
+      {chatList[chat.chatId]?.length !== 0
+        ? <div className='current-message'>{chatList[chat.chatId]?.length}</div>
         : ''
       }
     </div>

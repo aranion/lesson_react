@@ -12,16 +12,16 @@ const initialState = {
     items: {
       // chatid1:[],
       // chatid2: []
-      chatid1: [{
-        id: 0,
-        author: 'BOT1',
-        text: 'Тестовое сообщение 1'
-      }],
-      chatid2: [{
-        id: 0,
-        author: 'ME',
-        text: 'Тестовое сообщение 2'
-      }],
+      // chatid1: [{
+      //   id: 0,
+      //   author: 'BOT1',
+      //   text: 'Тестовое сообщение 1'
+      // }],
+      // chatid2: [{
+      //   id: 0,
+      //   author: 'ME',
+      //   text: 'Тестовое сообщение 2'
+      // }],
     }
 };
 
@@ -36,15 +36,15 @@ export default function chatReducer(state = initialState, action) {
         }
       }
     }
-    case CHANGE_ADD_MESSAGE: { 
+    case CHANGE_ADD_MESSAGE: { debugger
       return {
         ...state,
-        items: { 
-          ...state.items, 
-          [action.payload.message.chatId]: 
-            [ ...state.items[action.payload.message.chatId], 
-              action.payload.message.newMessage
-            ]
+        items: {
+          ...state.items,
+          [action.payload.message.chatId]: [
+            ...(state.items[action.payload.message.chatId] || []),
+            {...action.payload.message.newMessage},
+          ],
         }
       }
     }
