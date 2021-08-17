@@ -6,11 +6,11 @@ import ChatListForm from './ChatListForm/ChatListForm';
 import './chatsList.css';
 import { useHistory, useParams } from 'react-router-dom';
 import { changeAddChatDB, changeDeleteChat, changeDeleteChatFromDB, changeInputAuthor, subscribeOmChatListChangings } from '../../store/actions/chatListAction';
-import { changeAddChatMessagesDB, changeDeleteChatMessages, changeDeleteChatMessagesFromDB } from '../../store/actions/chatAction';
+import { changeDeleteChatMessages, changeDeleteChatMessagesFromDB } from '../../store/actions/chatAction';
 
 export default function ChatList() {
   const dispatch = useDispatch();
-  const { chat, chatList } = useSelector(state => state);
+  const { chatList } = useSelector(state => state);
   const { chatId } = useParams();
   const urlHistory = useHistory();
 
@@ -33,12 +33,11 @@ export default function ChatList() {
     const nextId = generateID();
     urlHistory.push('/chat/' + nextId);
 
-    dispatch(changeAddChatDB({ chatId: nextId, name: chatList.inputPartner }));
-    dispatch(changeAddChatMessagesDB(nextId));
-    // dispatch(changeAddMessage({
-    //   chatId: nextId,
-    //   newMessage: {}
-    // }));
+    dispatch(changeAddChatDB({
+      chatId: nextId,
+      name: chatList.inputPartner,
+      quantityMessages: 0
+    }));
     dispatch(changeInputAuthor(''));
   }
   const handleInputAuthor = (e) => {
@@ -59,8 +58,8 @@ export default function ChatList() {
             <ChatListItem
               key={item.chatId}
               chat={item}
-              chatList={chat.items}
               chatId={chatId}
+              quantityMessages={item.quantityMessages}
               handleDeleteChat={handleDeleteChat}
             />
           )}

@@ -1,11 +1,8 @@
-import { CHANGE_ADD_NEW_CHAT, CHANGE_INPUT_AUTHOT, CHANGE_DELETE_CHAT } from "../../actions/chatListAction";
+import { CHANGE_ADD_NEW_CHAT, CHANGE_INPUT_AUTHOT, CHANGE_DELETE_CHAT, CHANGE_ADD_QUANTITY_MESSAGES } from "../../actions/chatListAction";
 
 const initialState = {
   inputPartner: '',
-  items: {
-    // chatid1: { chatId:1, name: 'BOT1' },
-    // chatid2: { chatId:2, name: 'BOT2' }
-  }
+  items: {}
 };
 
 export default function chatReducer(state = initialState, action) {
@@ -17,7 +14,8 @@ export default function chatReducer(state = initialState, action) {
           ...state.items, 
           [action.payload.chatId]: { 
             chatId: action.payload.chatId,
-            name: action.payload.name }
+            name: action.payload.name
+          }
         }    
       }
     }
@@ -32,6 +30,18 @@ export default function chatReducer(state = initialState, action) {
       return {
         ...state,
         items: {...state.items}
+      }
+    }
+    case CHANGE_ADD_QUANTITY_MESSAGES: { 
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.payload.chatId]: {
+            ...state.items[action.payload.chatId],
+            quantityMessages: action.payload.quantityMessages
+          }
+        }
       }
     }
     default:

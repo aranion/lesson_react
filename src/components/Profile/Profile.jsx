@@ -2,6 +2,7 @@ import { Checkbox, Input } from '@material-ui/core';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeProfile, changeProfileAge, changeProfileCheckBox } from '../../store/actions/profileAction';
+import './profile.css';
 
 const Profile = () => {
 
@@ -21,17 +22,38 @@ const Profile = () => {
   return (
     <div>
       <h3> Profile page </h3>
+      <div className='profile_row'>
+        <p>Name: <b>{name || 'Anonym'}</b></p>
+        <div className='profile_input'>
+          <span>Сhange your name: </span>
+          <Input
+            label='Name'
+            placeholder="Введите имя"
+            value={name}
+            onChange={handleNameSubmit}
+          />
+        </div>
+      </div>
+      <div className='profile_row'>
+        <p>Age: <b>{age >= 0 && age <= 100 ? age : '0'}</b></p>
+        <div className='profile_input'>
+          <span>Сhange your age:</span>
+          <Input
+            label='Age'
+            placeholder="Введите возраст"
+            type="number"
+            value={age}
+            onChange={handleAgeSubmit}
+          />
+        </div>
+
+      </div>
+
       <Checkbox
         checked={checked}
         onChange={handleCheckBocSubmit}
         color="primary"
       />
-      <Input label='Name' placeholder="Введите имя" value={name} onChange={handleNameSubmit} />
-      <Input label='Age' placeholder="Введите возраст" type="number" value={age} onChange={handleAgeSubmit} />
-      <div>
-        <p>Name: {name}</p>
-        <p>Age: {age}</p>
-      </div>
     </div>
   )
 }

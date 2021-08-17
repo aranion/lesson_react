@@ -1,4 +1,5 @@
-import firebase from 'firebase';
+import { db } from '../../firebase/firebase';
+import { changeAddQuantityMessages } from './chatListAction';
 
 export const CHANGE_ADD_CHAT_MESSAGES = "CHATS::CHANGE_ADD_CHAT_MESSAGES";
 export const CHANGE_DELETE_CHAT_MESSAGES = "CHATS::CHANGE_DELETE_CHAT_MESSAGES";
@@ -35,8 +36,6 @@ export const changeAddMessageSaga = (message) => ({
 // >>-- Работа с БД -- >> //
 
 export const changeAddChatMessagesDB = (chatId) => {
-  const db = firebase.database();
-
   return (dispatch, getState) => {
     // -> записать данные в БД
       db.ref('chat').child('items').child(chatId).push({chatId});
@@ -44,22 +43,20 @@ export const changeAddChatMessagesDB = (chatId) => {
   }
 };
 export const changeDeleteChatMessagesFromDB = (chatId) => {
-  const db = firebase.database();
-
   return (dispatsh, getState) => {
+    // -> удалениеиз БД
     try {
       db.ref('chat').child('items').child(chatId).remove();
     } catch(error) {
       console.error(error.message);
     }
+    // <- 
   }
 };
 export const changeAddMessageBot = (message) => {
-  const db = firebase.database();
-
   return (dispath, getState) => {
     // -> записать данные в БД
-    db.ref('chat').child('items').child(message.chatId).push(message.newMessage);
+      db.ref('chat').child('items').child(message.chatId).push(message.newMessage);
     // <-
 
     const tmr1 = setTimeout(()=> {
@@ -82,27 +79,29 @@ export const changeAddMessageBot = (message) => {
 }};
 
 export const subscribeOmChatChangings = (chatId) => {
-  const db = firebase.database();
-
   return (dispatch, getState) => {
 
     // -> подписываемся на события изменения/обавления из/в БД
-    db.ref('chat').child('items').child(chatId).on('child_added', snapshot => {
-      console.log('chat child_added');
-      
-      dispatch(changeAddMessage({
-        chatId,
-        newMessage: snapshot.val()
-      }));
+    db.ref('chat').child('items').on('child_added', snapshot => {
+
+      if (snapshot.key === chatId) {
+        dispatch(changeAddMessage({
+          chatId,
+          newMessage: Object.values(snapshot.val()),
+        }));
+        dispatch(changeAddQuantityMessages(chatId, Object.keys(snapshot.val()).length));
+      }
     });
-    db.ref('chat').child('items').child(chatId).on('child_changed', snapshot => {
-      console.log('chat child_changed');
+    db.ref('chat').child('items').on('child_changed', snapshot => {
       
-      dispatch(changeAddMessage({
-        chatId,
-        newMessage: snapshot.val()
-      }));
-    })
+      if (snapshot.key === chatId) {
+        dispatch(changeAddMessage({
+          chatId,
+          newMessage: Object.values(snapshot.val()),
+        }));
+        dispatch(changeAddQuantityMessages(chatId, Object.keys(snapshot.val()).length));
+      }
+    });
     // <-
   }
 }

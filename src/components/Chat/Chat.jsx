@@ -67,12 +67,15 @@ const Chat = () => {
   }
   return (
     <div>
-      {chatId && chat?.items && Object.keys(chat.items).indexOf(chatId) !== -1
-        ? <ChatInput
-          inputMessage={chat.inputMessage}
-          handleMessageChange={handleMessageChange}
-          handleSubmit={handleSubmit}
-        />
+      {chatId
+        ? (
+          chatList?.items && Object.keys(chatList.items).indexOf(chatId) !== -1
+            ? <ChatInput
+              inputMessage={chat.inputMessage}
+              handleMessageChange={handleMessageChange}
+              handleSubmit={handleSubmit}
+            />
+            : 'Такого чата нет :(')
         : 'Выберите чат'}
       {chat.items[chatId]?.map(m => {
         if (m.id) {

@@ -9,20 +9,7 @@ import {
 const initialState = {
     isVisiblePrint: false,
     inputMessage: '',
-    items: {
-      // chatid1:[],
-      // chatid2: []
-      // chatid1: [{
-      //   id: 0,
-      //   author: 'BOT1',
-      //   text: 'Тестовое сообщение 1'
-      // }],
-      // chatid2: [{
-      //   id: 0,
-      //   author: 'ME',
-      //   text: 'Тестовое сообщение 2'
-      // }],
-    }
+    items: {}
 };
 
 export default function chatReducer(state = initialState, action) {
@@ -36,15 +23,12 @@ export default function chatReducer(state = initialState, action) {
         }
       }
     }
-    case CHANGE_ADD_MESSAGE: { debugger
+    case CHANGE_ADD_MESSAGE: { 
       return {
         ...state,
         items: {
           ...state.items,
-          [action.payload.message.chatId]: [
-            ...(state.items[action.payload.message.chatId] || []),
-            {...action.payload.message.newMessage},
-          ],
+          [action.payload.message.chatId]: action.payload.message.newMessage,
         }
       }
     }

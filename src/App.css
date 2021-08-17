@@ -55,7 +55,7 @@ form {
 .wrapper-row {
   padding: 10px;
 }
-.wrapper-row:hover, .message-p:hover {
+.wrapper-row:hover, .message-p:hover, .profile_row:hover {
   background: #ececec;
   cursor: pointer;
 }
