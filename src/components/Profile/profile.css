@@ -1,3 +1,7 @@
+.profile_column {
+  margin: 0 auto;
+  max-width: 350px;
+}
 .profile_row {
   display: flex;
   flex-direction: column;

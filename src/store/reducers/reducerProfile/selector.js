@@ -4,7 +4,8 @@ const initialState = {
   name:'Иван',
   age: 29,
   checkBox: false,
-  isAuthed: false
+  isAuthed: false,
+  // userId: null
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -33,6 +34,12 @@ export default function profileReducer(state = initialState, action) {
         isAuthed: action.payload.isAuthed
       }
     }
+    // case SET_USER_ID: { 
+    //   return {
+    //     ...state,
+    //     userId: action.payload.userId
+    //   }
+    // }
     default:
       return state;
   }

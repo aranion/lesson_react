@@ -3,10 +3,15 @@ import React from 'react';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail, setError, setIsSigningUp, setPassword } from '../../store/actions/loginAction';
+// import { setUserId } from '../../store/actions/profileAction';
 
 const Login = () => {
   const dispatch = useDispatch();
   const { email, password, error, isSigningUp } = useSelector(state => state.login);
+
+  // React.useEffect(() => {
+  //   firebase.auth().onAuthStateChanged(user => { dispatch(setUserId(user.uid)) });
+  // }, [dispatch])
 
   const handleChangeEmail = (e) => dispatch(setEmail(e.target.value));
   const handleChangePassword = (e) => dispatch(setPassword(e.target.value));
@@ -20,6 +25,7 @@ const Login = () => {
   const handleSignUp = async () => {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
+      // await firebase.auth().onAuthStateChanged(user => { dispatch(setUserId(user.uid)) });
     } catch (err) {
       dispatch(setError(err.message));
     }
