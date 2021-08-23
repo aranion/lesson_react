@@ -15,7 +15,7 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         name: action.payload.name
       }
-    }
+    } 
     case CHANGE_AGE: {
       return {
         ...state,

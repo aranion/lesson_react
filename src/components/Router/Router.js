@@ -3,12 +3,12 @@ import { Switch, Route } from "react-router";
 import { Redirect } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import firebase from 'firebase';
-import App from "../App";
-import Home from "../components/Home/Home";
-import News from "../components/News/News";
-import Login from "../components/Login/Login";
-import Profile from "../components/Profile/Profile";
-import { changeIsAuthed } from '../store/actions/profileAction';
+import App from "../../App";
+import Home from "../Home/Home";
+import News from "../News/News";
+import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
+import { changeIsAuthed } from '../../store/actions/profileAction';
 import PrivateRoute from './PrivateRoute';
 
 export default function Router() {
