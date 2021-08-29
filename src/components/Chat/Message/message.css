@@ -1,0 +1,31 @@
+.wrapper-row-me, .wrapper-row-bot {
+  padding: 10px 0;
+}
+.wrapper-row-me {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.wrapper-row-bot {
+  text-align: left;
+}
+.message-span {
+  font-size: 16px;
+}
+.message-top {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.message-p {
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 5px;
+  margin-right: 0px;
+  box-sizing: border-box;
+  font-size: 24px;
+  min-width: 77px;
+  max-width: 350px;
+  display: inline-block;
+}

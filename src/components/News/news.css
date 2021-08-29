@@ -1,0 +1,28 @@
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 41px);
+}
+.news-content {
+  flex-wrap: wrap;
+    display: flex;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+
+.news-content  li {
+  list-style-type: none; 
+}
+.news-content  a {
+ text-decoration: none;
+ color: black;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+.center button {
+  margin: 5px;
+}

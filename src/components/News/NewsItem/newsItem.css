@@ -1,0 +1,23 @@
+.news-row {
+  width: 600px;
+  border: 1px solid grey;
+  margin: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.news-row h4 {
+margin: 0 0 15px 0;
+}
+.news-row:hover { 
+  background-color: lightcyan;
+  cursor: pointer;
+  text-decoration: none;
+}
+.news-img {
+  width: 150px;
+  margin-right: 30px;
+  object-fit: cover;
+}
+.news-wrapper {
+  display: flex;
+}

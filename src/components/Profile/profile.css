@@ -1,0 +1,19 @@
+.profile_column {
+  margin: 0 auto;
+  max-width: 350px;
+}
+.profile_row {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px auto;
+}
+.profile_input {
+  display: flex;
+}
+.profile_input > span {
+  margin-right: 10px;
+}
