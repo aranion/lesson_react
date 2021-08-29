@@ -33,21 +33,21 @@ export const changeIsAuthed = (isAuthed) => ({
 export const changeProfileNameDB = (newName) => {
   return (dispatch, getState) => {
     // получение userID
-    firebase.auth().onAuthStateChanged(user=> {
-      // -> Запись в БД
-        db.ref('profile').child(user.userId).child('name').set(newName);
-      // <-
-    })
+    // firebase.auth().onAuthStateChanged(user=> {
+    //   // -> Запись в БД
+    //     db.ref('profile').child(user.userId).child('name').set(newName);
+    //   // <-
+    // })
   }
 }
 export const changeProfileAgeDB = (age) => {
   return (dispatch, getState) => {
     // получение userID
-    firebase.auth().onAuthStateChanged(user=> {
-      // -> Запись в БД
-        db.ref('profile').child(user.uid).child('age').set(age);
-      // <-
-    })
+    // firebase.auth().onAuthStateChanged(user=> {
+    //   // -> Запись в БД
+    //     db.ref('profile').child(user.uid).child('age').set(age);
+    //   // <-
+    // })
     
   }
 }

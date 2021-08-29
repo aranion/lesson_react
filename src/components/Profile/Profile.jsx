@@ -1,7 +1,7 @@
 import { Button, Checkbox, Input } from '@material-ui/core';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeProfile, changeProfileAge, changeProfileCheckBox, subscribeOmProfileChangings } from '../../store/actions/profileAction';
+import { changeProfile, changeProfileAge, changeProfileAgeDB, changeProfileCheckBox, changeProfileNameDB, subscribeOmProfileChangings } from '../../store/actions/profileAction';
 import './profile.css';
 
 const Profile = () => {
@@ -23,8 +23,8 @@ const Profile = () => {
   }
 
   const handleClickForm = () => {
-    // dispatch(changeProfileNameDB(name));
-    // dispatch(changeProfileAgeDB(age));
+    dispatch(changeProfileNameDB(name));
+    dispatch(changeProfileAgeDB(age));
   }
 
   return (
@@ -40,6 +40,7 @@ const Profile = () => {
               placeholder="Введите имя"
               value={name}
               onChange={handleNameSubmit}
+              id='inputName'
             />
           </div>
         </div>
@@ -52,6 +53,7 @@ const Profile = () => {
               placeholder="Введите возраст"
               type="number"
               value={age}
+              id="age"
               onChange={handleAgeSubmit}
             />
           </div>
